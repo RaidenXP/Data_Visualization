@@ -11,15 +11,18 @@ def visualize_owner_to_pos_revs():
     simp_owners = []
     percent_of_pos_rev = []
 
-    for amount in owners:
-        temp = amount.split(" .. ")
-        simp_owners.append(temp[1])
+    
+
+    for instances in owners:
+        temp = instances.split(" .. ")
+        simp_owners.append(int(temp[1].replace(",", "")))
 
     for rev in range(len(positive_revs)):
-        percent = positive_revs[rev] / (positive_revs[rev] + negative_revs[rev])
-        percent_of_pos_rev.append(percent)
-
-    plt.style.use('seaborn')
+        if (positive_revs[rev] + negative_revs[rev]) == 0:
+            percent_of_pos_rev.append(0)
+        else:
+            percent = positive_revs[rev] / (positive_revs[rev] + negative_revs[rev])
+            percent_of_pos_rev.append(percent)
 
     plt.scatter(simp_owners, positive_revs, c=percent_of_pos_rev, cmap="Greens", edgecolor='black', 
         linewidth=1, alpha=0.75)
@@ -27,6 +30,7 @@ def visualize_owner_to_pos_revs():
     cbar = plt.colorbar()
     cbar.set_label('Percent of Positive Reviews')
 
+    plt.xscale('log')
     plt.yscale('log')
 
     plt.title('Owner count to Positive Reviews')
