@@ -11,8 +11,6 @@ def visualize_owner_to_pos_revs():
     simp_owners = []
     percent_of_pos_rev = []
 
-    
-
     for instances in owners:
         temp = instances.split(" .. ")
         simp_owners.append(int(temp[1].replace(",", "")))
@@ -24,7 +22,7 @@ def visualize_owner_to_pos_revs():
             percent = positive_revs[rev] / (positive_revs[rev] + negative_revs[rev])
             percent_of_pos_rev.append(percent)
 
-    plt.scatter(simp_owners, positive_revs, c=percent_of_pos_rev, cmap="Greens", edgecolor='black', 
+    plt.scatter(simp_owners, positive_revs, c=percent_of_pos_rev, cmap="Greens", edgecolor='black',
         linewidth=1, alpha=0.75)
 
     cbar = plt.colorbar()
