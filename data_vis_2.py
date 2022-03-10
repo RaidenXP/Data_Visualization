@@ -1,5 +1,6 @@
 import pandas as pd
 from matplotlib import pyplot as plt
+from wordcloud import WordCloud
 
 def genre_analysis():
     steam_data = pd.read_csv('steam_games')
@@ -44,6 +45,20 @@ def genre_analysis():
     ax2.set_ylabel("Genres Combos")
 
     ax2.barh(list(simp_genre_combinations.keys()), simp_genre_combinations.values())
+
+    wordcloud_genres = WordCloud(width=1920, height=1080, background_color='white').generate_from_frequencies(
+                    frequencies=genre_dict)
+
+    plt.figure()
+    plt.imshow(wordcloud_genres)
+    plt.axis("off")
+    
+    wordcloud_combos = WordCloud(width=1920, height=1080, background_color='white').generate_from_frequencies(
+                    frequencies=genre_combinations)
+
+    plt.figure()
+    plt.imshow(wordcloud_combos)
+    plt.axis("off")
 
     plt.subplot_tool()
     plt.show()
