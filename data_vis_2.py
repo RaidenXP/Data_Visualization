@@ -1,22 +1,53 @@
 import pandas as pd
-import seaborn as sns
 from matplotlib import pyplot as plt
 
 def genre_analysis():
     steam_data = pd.read_csv('steam_games')
 
-    genre_occurences = (steam_data['genre'].value_counts()).to_dict()
+    genre_combinations = (steam_data['genre'].value_counts()).to_dict()
 
-    genre_df = pd.DataFrame(genre_occurences.keys(), columns=['genre'])
-    count_df = pd.DataFrame(genre_occurences.values(), columns=['count'])
+    simp_genre_combinations = (steam_data['genre'].value_counts())[:20].to_dict()
 
-    new_df = pd.merge(genre_df, count_df, left_index=True, right_index=True)
+    genres_set = {}
 
-    #plt.bar(genre_occurences.keys(), genre_occurences.values())
+    for genres in steam_data['genre']:
+        if len(genres_set) == 0 and not(type(genres) == float):
+            temp = genres.split(", ")
+            genres_set = set(temp)
+        elif not(type(genres) == float):
+            temp = genres.split(", ")
+            genres_set.update(set(temp))
 
-    sns.catplot(x='genre', data=steam_data, kind='count')
+    genres_set = sorted(genres_set)
 
+    genre_dict = dict.fromkeys(genres_set, 0)
+
+    for item in genres_set:
+        temp = 0
+        for key in genre_combinations.keys():
+            if item in key:
+                temp = temp + genre_combinations[key]
+                genre_dict[item] = temp
+
+    plt.style.use('seaborn-dark')
+
+    fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1)
+
+    ax1.set_title("How many Games in a Genre")
+    ax1.set_xlabel("Game Count")
+    ax1.set_ylabel("Genres")
+
+    ax1.barh(list(genre_dict.keys()), genre_dict.values())
+
+    ax2.set_title("Top 20 Genre Combinations")
+    ax2.set_xlabel("Game Count")
+    ax2.set_ylabel("Genres Combos")
+
+    ax2.barh(list(simp_genre_combinations.keys()), simp_genre_combinations.values())
+
+    plt.subplot_tool()
     plt.show()
+
 
 if __name__ == "__main__":
     genre_analysis()
