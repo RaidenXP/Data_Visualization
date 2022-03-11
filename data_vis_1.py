@@ -36,8 +36,3 @@ def visualize_owner_to_pos_revs():
     plt.ylabel('Positive Reviews')
 
     plt.show()
-    
-
-
-if __name__ == "__main__":
-    visualize_owner_to_pos_revs()

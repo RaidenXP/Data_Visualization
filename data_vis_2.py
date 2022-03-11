@@ -62,7 +62,3 @@ def genre_analysis():
 
     plt.subplot_tool()
     plt.show()
-
-
-if __name__ == "__main__":
-    genre_analysis()
