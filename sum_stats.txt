@@ -1,0 +1,14 @@
+count    1.000000e+04
+mean     7.012261e+03
+std      6.655782e+04
+min      0.000000e+00
+25%      1.930000e+02
+50%      6.870000e+02
+75%      2.514750e+03
+max      5.486642e+06
+Name: positive_rev, dtype: float64
+count       9959
+unique       886
+top       Action
+freq         584
+Name: genre, dtype: object
